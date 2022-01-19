@@ -10,7 +10,8 @@ st.title('Weather app')
 
 @st.cache
 def load_data():
-    data = pd.read_csv('summarizedfebruary.csv')
+    # data = pd.read_csv('summarizedfebruary.csv')
+    data = pd.read_csv("summarizedfebruary.zip")
     data['year'] = 2020
     data.DATE = pd.to_datetime(data[['day', 'month','year']], dayfirst=True).dt.date
     return data
@@ -21,7 +22,7 @@ data = load_data()
 
 # st.subheader('Selection of the variable')
 col = data.columns.values.tolist()
-col = col[4:11]
+col = col[3:9]
 variable_choice = st.sidebar.selectbox('Selection of the variable', col)
 
 
