@@ -5,8 +5,14 @@ from statistics import mean
 
 st.set_page_config(layout="wide")
 
-st.title('Weather app')
+col1, col2 = st.columns(2)
 
+
+with col1:
+    st.title('Weather app')
+
+with col2:
+    st.image("Logo_SPR.jpg", width=150)
 
 @st.cache
 def load_data():
