@@ -13,7 +13,7 @@ def load_data():
     # data = pd.read_csv('summarizedfebruary.csv')
     data = pd.read_csv("summarizedfebruary.zip")
     data['year'] = 2020
-    data.DATE = pd.to_datetime(data[['day', 'month','year']], dayfirst=True).dt.date
+    data['DATE'] = pd.to_datetime(data[['day', 'month','year']], dayfirst=True).dt.date
     return data
 
 data = load_data()
