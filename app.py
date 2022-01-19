@@ -38,6 +38,8 @@ end_time = st.sidebar.select_slider('End date',options=endlist)
 ### Filtering #########################################
 temp = data.loc[(data['DATE']>= start_time) & (data['DATE']<= end_time)]
 
+temp=temp[['lat','lon', variable_choice]]
+
 aggreg = temp.groupby(['lat', 'lon']).aggregate('mean').reset_index()
 
 
