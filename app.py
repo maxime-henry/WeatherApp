@@ -2,7 +2,7 @@ import streamlit as st  # Template
 import pandas as pd
 import plotly.express as px
 from statistics import mean
-from getWeather import get_weather
+# from getWeather import get_weather
 
 st.set_page_config(layout="wide")
 
