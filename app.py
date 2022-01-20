@@ -34,21 +34,6 @@ col = col[3:9]
 variable_choice = st.sidebar.selectbox('Selection of the variable', col)
 
 
-
-# Perform the agregation 
-@st.cache(max_entries = 1)
-def do_the_aggregation(data, start,end,variable):
-    ### Filtering #########################################
-    temp = data.loc[(data['DATE']>= start) & (data['DATE']<= end)]
-
-    temp=temp[['lat','lon', variable]]
-
-    aggreg = temp.groupby(['lat', 'lon']).aggregate('mean').reset_index()
-    
-    return(aggreg)
-
-
-
 #### DATE Selection ####################""
 start_time = st.sidebar.select_slider('Start date',options=data['DATE'])
 
@@ -58,13 +43,31 @@ endlist = data[data['DATE']>start_time].DATE
 end_time = st.sidebar.select_slider('End date',options=endlist)
 ########################################################
 
+
+# Perform the agregation 
+@st.cache(max_entries = 1)
+def do_the_aggregation(data, start,end,variable):
+    ### Filtering #########################################
+    temp = data.loc[(data['DATE']>= start) & (data['DATE']<= end)]
+
+    temp=temp[['lat','lon', variable]]
+    temp[variable] = temp[variable].round(2)
+
+    aggreg = temp.groupby(['lat', 'lon']).aggregate('mean').reset_index()
+    
+    return(aggreg)
+
+
+
+
+
 aggreg = do_the_aggregation(data, start= start_time, end = end_time, variable = variable_choice)
 
 
 
 # country choice 
 
-# selected_country = st.sidebar.selectbox("Select a country", options=['FR','TR'])
+selected_country = st.sidebar.selectbox("Select a country", options=['TR'])
 
 
 px.set_mapbox_access_token(open(".mapbox_token").read())
