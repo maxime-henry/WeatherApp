@@ -33,12 +33,13 @@ def load_data(country):
     # obj = s3.Bucket('weatherdataspr').Object(country +'.csv').get()
     # data = pd.read_csv(obj['Body'], index_col=0)
     # data = pd.read_csv("TR.csv")
-    data = pd.read_csv('summarizedfebruary.csv')
+    # data = pd.read_csv('summarizedfebruary.csv')
+    data = pd.read_csv("summarizedfebruary.zip")
     # data = get_weather(country)
     data['year'] = 2020
     data['DATE'] = pd.to_datetime(data[['day', 'month','year']], dayfirst=True).dt.date
     
-    # data = pd.read_csv("FR.zip")
+    # 
     
     return data
 
