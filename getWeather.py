@@ -84,13 +84,15 @@ def get_weather(country):
 
         return(df)
 
-# data = get_weather('UA')
+data = get_weather('TR')
 
 # print("data is here")
 # print("saving csv ")
 
 # end = datetime.now()
-# data.to_csv("UA.csv")
+data.to_csv("TR.csv")
+
+print("done for good")
 
 # print("Let's send it to S3")
 # s3.Bucket('weatherdataspr').upload_file(Filename='UA.csv', Key='UA.csv')

@@ -3,19 +3,19 @@ import pandas as pd
 import plotly.express as px
 from statistics import mean
 import datetime
-import boto3
+# import boto3
 # from getWeather import get_weather
 
 st.set_page_config(layout="wide")
 
 col1, col2 = st.columns(2)
 
-s3 = boto3.resource(
-    service_name='s3',
-    region_name='eu-west-3',
-    aws_access_key_id=st.secrets.db_credentials.aws_access_key_id,
-    aws_secret_access_key=st.secrets.db_credentials.aws_secret_access_key
-)
+# s3 = boto3.resource(
+#     service_name='s3',
+#     region_name='eu-west-3',
+#     aws_access_key_id=st.secrets.db_credentials.aws_access_key_id,
+#     aws_secret_access_key=st.secrets.db_credentials.aws_secret_access_key
+# )
 
 with col1:
     st.title('Weather app')
@@ -30,13 +30,14 @@ selected_country = st.sidebar.selectbox("Select a country", options=['TR','FR','
 
 @st.cache(max_entries = 1)
 def load_data(country):
-    obj = s3.Bucket('weatherdataspr').Object(country +'.csv').get()
-    data = pd.read_csv(obj['Body'], index_col=0)
-
+    # obj = s3.Bucket('weatherdataspr').Object(country +'.csv').get()
+    # data = pd.read_csv(obj['Body'], index_col=0)
+    # data = pd.read_csv("TR.csv")
+    data = pd.read_csv('summarizedfebruary.csv')
     # data = get_weather(country)
     data['year'] = 2020
     data['DATE'] = pd.to_datetime(data[['day', 'month','year']], dayfirst=True).dt.date
-    # # data = pd.read_csv('summarizedfebruary.csv')
+    
     # data = pd.read_csv("FR.zip")
     
     return data
