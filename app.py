@@ -26,7 +26,7 @@ with col2:
 
 # country choice 
 
-selected_country = st.sidebar.selectbox("Select a country", options=['FR','TR','ES','HU','UA' ], help = "Select the coutry you need the data from")
+selected_country = st.sidebar.selectbox("Select a country", options=['TR','FR','ES','HU','UA' ], help = "Select the coutry you need the data from")
 
 @st.cache(max_entries = 1)
 def load_data(country):
