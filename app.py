@@ -12,8 +12,8 @@ col1, col2 = st.columns(2)
 s3 = boto3.resource(
     service_name='s3',
     region_name='eu-west-3',
-    aws_access_key_id='AKIAZ7LWH6KWW2KAZX6Z',
-    aws_secret_access_key='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'
+    aws_access_key_id=st.secrets.db_credentials.aws_access_key_id,
+    aws_secret_access_key=st.secrets.db_credentials.aws_secret_access_key
 )
 
 with col1:
