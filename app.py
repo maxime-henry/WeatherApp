@@ -4,6 +4,9 @@ import plotly.express as px
 from statistics import mean
 import datetime
 import boto3
+from getWeather import get_weather
+
+from getWeather import get_weather
 
 st.set_page_config(layout="wide")
 
@@ -29,8 +32,10 @@ selected_country = st.sidebar.selectbox("Select a country", options=['FR','TR','
 
 @st.cache(max_entries = 1)
 def load_data(country):
-    obj = s3.Bucket('weatherdataspr').Object(country +'.csv').get()
-    data = pd.read_csv(obj['Body'], index_col=0)
+    # obj = s3.Bucket('weatherdataspr').Object(country +'.csv').get()
+    # data = pd.read_csv(obj['Body'], index_col=0)
+
+    data = get_weather(country)
     data['year'] = 2020
     data['DATE'] = pd.to_datetime(data[['day', 'month','year']], dayfirst=True).dt.date
     # # data = pd.read_csv('summarizedfebruary.csv')
@@ -51,10 +56,12 @@ col = ['temperature_c_2_m_above_gnd_max',
                             'temperature_c_2_m_above_gnd_avg',
                             'precipitation_total_grid_mm_surface_sum',
                             'wind_speed_km_per_h_2_m_above_gnd_avg',
-                            'relative_humidity_pct_2_m_above_gnd_avg'
+                            'relative_humidity_pct_2_m_above_gnd_avg',
+                            'shortwave_radiation_w_per_m2_surface_sum'
                             ]
 variable_choice = st.sidebar.selectbox('Selection of the variable', col, help = "Select the weather variable that you want to be displayed on the map")
 
+aggregation = st.sidebar.radio("Choose the aggregation", ("Average", 'Sum'))
 
 #### DATE Selection ####################""
 start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,2,1), min_value=datetime.date(2020,2,1), max_value=datetime.date(2020,9,30))
@@ -66,14 +73,17 @@ end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,9,
 
 # Perform the agregation 
 @st.cache(max_entries = 1)
-def do_the_aggregation(data, start,end,variable):
+def do_the_aggregation(data, start,end,variable, aggregation):
     ### Filtering #########################################
     temp = data.loc[(data['DATE']>= start) & (data['DATE']<= end)]
 
     temp=temp[['lat','lon', variable]]
     temp[variable] = temp[variable].astype(float).round(2)
-
-    aggreg = temp.groupby(['lat', 'lon']).aggregate('mean').reset_index()
+    
+    if aggregation == 'Average' :
+        aggreg = temp.groupby(['lat', 'lon']).aggregate('mean').reset_index()
+    if aggregation == 'Sum':
+        aggreg = temp.groupby(['lat', 'lon']).aggregate('sum').reset_index()
     
     return(aggreg)
 
@@ -82,7 +92,7 @@ def do_the_aggregation(data, start,end,variable):
 # st.write(data.sample(10))
 
 
-aggreg = do_the_aggregation(data, start= start_time, end = end_time, variable = variable_choice)
+aggreg = do_the_aggregation(data, start= start_time, end = end_time, variable = variable_choice, aggregation=aggregation)
 
 
 px.set_mapbox_access_token(open(".mapbox_token").read())
