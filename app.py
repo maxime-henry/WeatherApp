@@ -3,21 +3,19 @@ import pandas as pd
 import plotly.express as px
 from statistics import mean
 import datetime
-import boto3
-from getWeather import get_weather
-
+# import boto3
 from getWeather import get_weather
 
 st.set_page_config(layout="wide")
 
 col1, col2 = st.columns(2)
 
-s3 = boto3.resource(
-    service_name='s3',
-    region_name='eu-west-3',
-    aws_access_key_id=st.secrets.db_credentials.aws_access_key_id,
-    aws_secret_access_key=st.secrets.db_credentials.aws_secret_access_key
-)
+# s3 = boto3.resource(
+#     service_name='s3',
+#     region_name='eu-west-3',
+#     aws_access_key_id=st.secrets.db_credentials.aws_access_key_id,
+#     aws_secret_access_key=st.secrets.db_credentials.aws_secret_access_key
+# )
 
 with col1:
     st.title('Weather app')
