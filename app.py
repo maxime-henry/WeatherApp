@@ -57,11 +57,12 @@ col = ['temperature_c_2_m_above_gnd_max',
                             'precipitation_total_grid_mm_surface_sum',
                             'wind_speed_km_per_h_2_m_above_gnd_avg',
                             'relative_humidity_pct_2_m_above_gnd_avg',
-                            'shortwave_radiation_w_per_m2_surface_sum'
+                            # 'shortwave_radiation_w_per_m2_surface_sum'
+                            'GDD'
                             ]
 variable_choice = st.sidebar.selectbox('Selection of the variable', col, help = "Select the weather variable that you want to be displayed on the map")
 
-aggregation = st.sidebar.radio("Choose the aggregation", ("Average", 'Sum'))
+aggregation = st.sidebar.radio("Slect the aggregation", ("Average", 'Sum'))
 
 #### DATE Selection ####################""
 start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,2,1), min_value=datetime.date(2020,2,1), max_value=datetime.date(2020,9,30))
@@ -75,7 +76,11 @@ end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,9,
 @st.cache(max_entries = 1)
 def do_the_aggregation(data, start,end,variable, aggregation):
     ### Filtering #########################################
-    temp = data.loc[(data['DATE']>= start) & (data['DATE']<= end)]
+    if variable == 'GDD':
+        datatemp = pd.read_csv('GDD.csv')
+        temp = datatemp.loc[(data['DATE']>= start) & (data['DATE']<= end)]
+    else:
+        temp = data.loc[(data['DATE']>= start) & (data['DATE']<= end)] 
 
     temp=temp[['lat','lon', variable]]
     temp[variable] = temp[variable].astype(float).round(2)
@@ -86,10 +91,6 @@ def do_the_aggregation(data, start,end,variable, aggregation):
         aggreg = temp.groupby(['lat', 'lon']).aggregate('sum').reset_index()
     
     return(aggreg)
-
-
-
-# st.write(data.sample(10))
 
 
 aggreg = do_the_aggregation(data, start= start_time, end = end_time, variable = variable_choice, aggregation=aggregation)
