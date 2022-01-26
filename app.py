@@ -76,9 +76,13 @@ end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,9,
 @st.cache(max_entries = 1)
 def do_the_aggregation(data, start,end,variable, aggregation):
     ### Filtering #########################################
+    print(variable)
+
     if variable == 'GDD':
         datatemp = pd.read_csv('GDD.csv')
-        temp = datatemp.loc[(data['DATE']>= start) & (data['DATE']<= end)]
+        datatemp['year'] = 2020
+        datatemp['DATE'] = pd.to_datetime(datatemp[['day', 'month','year']], dayfirst=True).dt.date
+        temp = datatemp.loc[(datatemp['DATE']>= start) & (datatemp['DATE']<= end)]
     else:
         temp = data.loc[(data['DATE']>= start) & (data['DATE']<= end)] 
 
