@@ -1,1 +1,10 @@
 /getWeather.py
+run_it
+Streamlit_key.pem
+test.ipynb
+\data\PT.csv
+*.csv
+*.pem
+AWSmac.pem
+*.token
+*.ipynb
