@@ -5,7 +5,7 @@ from statistics import mean
 import datetime
 
 
-st.set_page_config(layout="wide") # Wide page 
+st.set_page_config(layout="wide",initial_sidebar_state="expanded") # Wide page 
 
 # Two columns for wtitle and image 
 col1, col2 = st.columns(2)
@@ -107,7 +107,10 @@ fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, height=800)
 
 
 # Display header
-st.header('Map of '+ variable_choice )
+st.header('Map of '+ variable_choice)
+
+st.text('Between ' + str(start_time.day) + ' '+ str(start_time.strftime('%B')) + ' and ' + str(end_time.day) + ' '+str(end_time.strftime('%B')))
+
 # Dispay map 
 st.plotly_chart(fig, use_container_width=True)
 
