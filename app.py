@@ -14,7 +14,7 @@ with col1:
     st.title('Weather app')
 
 with col2:
-    st.image("data\Logo_SPR.jpg", width=150)
+    st.image("data/Logo_SPR.jpg", width=150)
 
 
 # country choice 
@@ -25,7 +25,7 @@ selected_country = st.sidebar.selectbox("Select a country", options=['TR','PT' ]
 # Only working for turkey now
 def load_data(country):
 
-    data = pd.read_csv(f"data\{country}.zip")
+    data = pd.read_csv(f"data/{country}.zip")
     # data = pd.read_csv("PT.csv")
     # data = get_weather(country)
     data['year'] = 2020
