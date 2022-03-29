@@ -18,14 +18,19 @@ with col2:
 
 
 # country choice 
-
-selected_country = st.sidebar.selectbox("Select a country", options=['TR','PT' ], help = "Select the coutry you need the data from")
+selected_country = st.sidebar.selectbox("Select a country", options=['ZA','TR','PT'], help = "Select the coutry you need the data from")
 
 @st.cache(max_entries = 1)
 # Only working for turkey now
 def load_data(country):
-
-    data = pd.read_csv(f"data/{country}.zip")
+    if country=="ZA":
+        data1 = pd.read_csv("data/ZA1.zip")
+        data2 = pd.read_csv("data/ZA2.zip")
+        data3 = pd.read_csv("data/ZA3.zip")
+        data_temp= pd.concat([data1, data2], axis = 1)
+        data= pd.concat([data_temp, data3], axis = 1)
+    else:
+        data = pd.read_csv(f"data/{country}.zip")
     # data = pd.read_csv("PT.csv")
     # data = get_weather(country)
     data['year'] = 2020
@@ -33,7 +38,8 @@ def load_data(country):
     return data
 
 # Load the data ####################
-data = load_data(country = selected_country)
+with st.spinner("We are loading millions of data points"):
+    data = load_data(country = selected_country)
 
 
 
@@ -51,7 +57,7 @@ col = ['temperature_c_2_m_above_gnd_max',
 # Select the weather variables
 variable_choice = st.sidebar.selectbox('Selection of the variable', col, help = "Select the weather variable that you want to be displayed on the map")
 # Select the aggregation 
-aggregation = st.sidebar.radio("Slect the aggregation", ("Average", 'Sum'))
+aggregation = st.sidebar.radio("Select the aggregation", ("Average", 'Sum'))
 
 #### DATE Selection ####################""
 start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,2,1), min_value=datetime.date(2020,2,1), max_value=datetime.date(2020,9,30))
@@ -86,7 +92,8 @@ def do_the_aggregation(data, start,end,variable, aggregation):
 
 
 # Do the aggregation 
-aggreg = do_the_aggregation(data, start= start_time, end = end_time, variable = variable_choice, aggregation=aggregation)
+with st.spinner("We are aggregating the data to display the map according to the data range you choosed.."):
+    aggreg = do_the_aggregation(data, start= start_time, end = end_time, variable = variable_choice, aggregation=aggregation)
 
 
 # Create the map with mapbox ans poltly express
