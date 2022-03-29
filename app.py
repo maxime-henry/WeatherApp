@@ -5,7 +5,7 @@ from statistics import mean
 import datetime
 
 
-st.set_page_config(layout="wide",initial_sidebar_state="expanded", page_title="Weather app", page_icon=":sun:") # Wide page 
+st.set_page_config(layout="wide",initial_sidebar_state="expanded", page_title="Weather app", page_icon="☀") # Wide page 
 
 # Two columns for wtitle and image 
 col1, col2 = st.columns(2)
