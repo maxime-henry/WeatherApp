@@ -60,6 +60,8 @@ variable_choice = st.sidebar.selectbox('Selection of the variable', col, help = 
 aggregation = st.sidebar.radio("Select the aggregation", ("Average", 'Sum'))
 
 #### DATE Selection ####################""
+
+
 start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,2,1), min_value=datetime.date(2020,2,1), max_value=datetime.date(2020,9,30))
 
 end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,9,30), min_value=start_time, max_value=datetime.date(2020,9,30))
@@ -101,7 +103,7 @@ px.set_mapbox_access_token(open(".mapbox_token").read())
 
 fig = px.scatter_mapbox(aggreg, lat=aggreg.lat, lon=aggreg.lon, color=round(aggreg[variable_choice],2), size=round(abs(aggreg[variable_choice]),2),
                         color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10,
-                        hover_name  = variable_choice)
+                        hover_name  = variable_choice, labels = aggreg[variable_choice])
 
 
 fig.update_layout(title="Map of " + variable_choice)
@@ -121,3 +123,5 @@ st.text('Between ' + str(start_time.day) + ' '+ str(start_time.strftime('%B')) +
 # Dispay map 
 st.plotly_chart(fig, use_container_width=True)
 
+
+st.caption("Version 1.0.0 2022 - SPR EAME - maxime.henry@syngenta.com")
