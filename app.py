@@ -75,7 +75,7 @@ if selected_country != 'ZA':
 
     end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,9,30), min_value=start_time, max_value=datetime.date(2020,9,30))
 else:
-    start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,7,1), min_value=datetime.date(2020,7,1), max_value=datetime.date(2021,7,30))
+    start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,10,1), min_value=datetime.date(2020,10,1), max_value=datetime.date(2021,7,30))
 
     end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2021,7,31), min_value=start_time, max_value=datetime.date(2021,7,31))
 
