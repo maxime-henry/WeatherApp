@@ -12,7 +12,8 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.title('Weather app')
-
+    st.caption("Data is compiled over 6 years (2016 - 2021)  \n Data is then averaged according to the date range selected on the sidebar ")
+    # st.caption(" And averaged according to the date range selected on the sidebar")
 with col2:
     st.image("data/Logo_SPR.jpg", width=150)
 
@@ -138,7 +139,7 @@ fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, height=800)
 st.header('Map of '+ variable_choice)
 
 st.text('Between ' + str(start_time.day) + ' '+ str(start_time.strftime('%B')) + ' and ' + str(end_time.day) + ' '+str(end_time.strftime('%B')))
-st.caption("Data is averaged over 6 years")
+
 
 # Dispay map 
 st.plotly_chart(fig, use_container_width=True)
