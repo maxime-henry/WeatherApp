@@ -27,14 +27,22 @@ def load_data(country):
         data1 = pd.read_csv("data/ZA1.zip")
         data2 = pd.read_csv("data/ZA2.zip")
         data3 = pd.read_csv("data/ZA3.zip")
+        data4 = pd.read_csv("data/ZA4.zip")
         data_temp= pd.concat([data1, data2], axis = 1)
-        data= pd.concat([data_temp, data3], axis = 1)
+        data_temp2= pd.concat([data3, data4], axis = 1)
+        data= pd.concat([data_temp, data_temp2], axis = 1)
+        converter = lambda x : 2021 if x < 9 else 2020
+        data['year'] = data['month'].apply(converter)
+
+        # data.to_csv("Bon_bug.csv")
     else:
         data = pd.read_csv(f"data/{country}.zip")
+        data['year']= 2020
+        
     # data = pd.read_csv("PT.csv")
     # data = get_weather(country)
-    data['year'] = 2020
-    data['DATE'] = pd.to_datetime(data[['day', 'month','year']], dayfirst=True).dt.date
+    
+    data['DATE'] = pd.to_datetime(data[['day', 'month','year']], dayfirst=True, errors='coerce').dt.date
     return data
 
 # Load the data ####################
@@ -61,10 +69,15 @@ aggregation = st.sidebar.radio("Select the aggregation", ("Average", 'Sum'))
 
 #### DATE Selection ####################""
 
+if selected_country != 'ZA':
 
-start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,2,1), min_value=datetime.date(2020,2,1), max_value=datetime.date(2020,9,30))
+    start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,2,1), min_value=datetime.date(2020,2,1), max_value=datetime.date(2020,9,30))
 
-end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,9,30), min_value=start_time, max_value=datetime.date(2020,9,30))
+    end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,9,30), min_value=start_time, max_value=datetime.date(2020,9,30))
+else:
+    start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,7,1), min_value=datetime.date(2020,7,1), max_value=datetime.date(2021,7,30))
+
+    end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2021,7,31), min_value=start_time, max_value=datetime.date(2021,7,31))
 
 ########################################################
 
@@ -98,6 +111,12 @@ with st.spinner("We are aggregating the data to display the map according to the
     aggreg = do_the_aggregation(data, start= start_time, end = end_time, variable = variable_choice, aggregation=aggregation)
 
 
+
+
+# machin = data.drop_duplicates()
+# st.dataframe(machin)
+
+
 # Create the map with mapbox ans poltly express
 px.set_mapbox_access_token(open(".mapbox_token").read())
 
@@ -119,6 +138,7 @@ fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, height=800)
 st.header('Map of '+ variable_choice)
 
 st.text('Between ' + str(start_time.day) + ' '+ str(start_time.strftime('%B')) + ' and ' + str(end_time.day) + ' '+str(end_time.strftime('%B')))
+st.caption("Data is averaged over 6 years")
 
 # Dispay map 
 st.plotly_chart(fig, use_container_width=True)
