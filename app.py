@@ -19,7 +19,7 @@ with col2:
 
 
 # country choice 
-selected_country = st.sidebar.selectbox("Select a country", options=['ZA','TR','PT'], help = "Select the coutry you need the data from")
+selected_country = st.sidebar.selectbox("Select a country", options=['ES_PT','ES','ZA','TR','PT'], help = "Select the coutry you need the data from")
 
 @st.cache(max_entries = 1)
 # Only working for turkey now
