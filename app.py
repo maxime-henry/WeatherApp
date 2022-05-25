@@ -152,4 +152,4 @@ st.text('Between ' + str(start_time.day) + ' '+ str(start_time.strftime('%B')) +
 st.plotly_chart(fig, use_container_width=True)
 
 
-st.caption("Version 1.0.1 2022 - SPR EAME - maxime.henry@syngenta.com")
+st.caption("Version 1.0.2 2022 - SPR EAME - maxime.henry@syngenta.com")
