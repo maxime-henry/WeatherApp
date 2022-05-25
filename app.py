@@ -70,15 +70,21 @@ aggregation = st.sidebar.radio("Select the aggregation", ("Average", 'Sum'))
 
 #### DATE Selection ####################""
 
-if selected_country != 'ZA':
-
-    start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,2,1), min_value=datetime.date(2020,2,1), max_value=datetime.date(2020,9,30))
-
-    end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,9,30), min_value=start_time, max_value=datetime.date(2020,9,30))
-else:
+if (selected_country == 'ZA') :
     start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,10,1), min_value=datetime.date(2020,10,1), max_value=datetime.date(2021,7,30))
 
     end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2021,7,31), min_value=start_time, max_value=datetime.date(2021,7,31))
+
+    
+elif selected_country == 'ES_PT':
+    start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,2,1), min_value=datetime.date(2020,2,1), max_value=datetime.date(2020,10,19))
+
+    end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,10,15), min_value=start_time, max_value=datetime.date(2020,10,19))
+else:
+    start_time =  st.sidebar.date_input(label= "Start date", value=datetime.date(2020,2,1), min_value=datetime.date(2020,2,1), max_value=datetime.date(2020,9,30))
+
+    end_time =  st.sidebar.date_input(label= "End date", value=datetime.date(2020,9,30), min_value=start_time, max_value=datetime.date(2020,9,30))
+
 
 ########################################################
 
@@ -99,6 +105,7 @@ def do_the_aggregation(data, start,end,variable, aggregation):
 
     temp=temp[['lat','lon', variable]]
     temp[variable] = temp[variable].astype(float).round(2)
+    temp = temp[['lat', 'lon',variable]]
     
     if aggregation == 'Average' :
         aggreg = temp.groupby(['lat', 'lon']).aggregate('mean').reset_index()
