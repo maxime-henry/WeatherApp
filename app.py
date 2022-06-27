@@ -19,7 +19,7 @@ with col2:
 
 
 # country choice 
-selected_country = st.sidebar.selectbox("Select a country", options=['ES_PT','ES','ZA','TR','PT'], help = "Select the coutry you need the data from")
+selected_country = st.sidebar.selectbox("Select a country", options=['FR','ES_PT','ES','ZA','TR','PT'], help = "Select the coutry you need the data from")
 
 @st.cache(max_entries = 1)
 # Only working for turkey now
@@ -103,6 +103,8 @@ def do_the_aggregation(data, start,end,variable, aggregation):
     # else:
     temp = data.loc[(data['DATE']>= start) & (data['DATE']<= end)] 
 
+    # temp.to_csv('temp.csv')
+
     temp=temp[['lat','lon', variable]]
     temp[variable] = temp[variable].astype(float).round(2)
     temp = temp[['lat', 'lon',variable]]
@@ -111,6 +113,7 @@ def do_the_aggregation(data, start,end,variable, aggregation):
         aggreg = temp.groupby(['lat', 'lon']).aggregate('mean').reset_index()
     if aggregation == 'Sum':
         aggreg = temp.groupby(['lat', 'lon']).aggregate('sum').reset_index()
+        aggreg.to_csv('aggreg.csv')
     return(aggreg)
 
 
