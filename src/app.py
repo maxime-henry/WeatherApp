@@ -25,10 +25,10 @@ selected_country = st.sidebar.selectbox("Select a country", options=['FR','ES_PT
 # Only working for turkey now
 def load_data(country):
     if country=="ZA":
-        data1 = pd.read_csv("data/ZA1.zip")
-        data2 = pd.read_csv("data/ZA2.zip")
-        data3 = pd.read_csv("data/ZA3.zip")
-        data4 = pd.read_csv("data/ZA4.zip")
+        data1 = pd.read_csv("../data/ZA1.zip")
+        data2 = pd.read_csv("../data/ZA2.zip")
+        data3 = pd.read_csv("../data/ZA3.zip")
+        data4 = pd.read_csv("../data/ZA4.zip")
         data_temp= pd.concat([data1, data2], axis = 1)
         data_temp2= pd.concat([data3, data4], axis = 1)
         data= pd.concat([data_temp, data_temp2], axis = 1)
@@ -37,7 +37,7 @@ def load_data(country):
 
         # data.to_csv("Bon_bug.csv")
     else:
-        data = pd.read_csv(f"data/{country}.zip")
+        data = pd.read_csv(f"../data/{country}.zip")
         data['year']= 2020
         
     # data = pd.read_csv("PT.csv")
