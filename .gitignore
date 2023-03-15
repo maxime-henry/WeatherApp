@@ -11,3 +11,6 @@ AWSmac.pem
 summarizedfebruary.zip
 .mapbox_token
 zzzz.py
+node_modules
+blueprint.md 
+package-lock.json

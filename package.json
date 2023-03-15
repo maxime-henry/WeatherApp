@@ -1,0 +1,7 @@
+{
+    "name": "@WeatherApp/readme",
+    "version": "1.2.5",
+    "devDependencies": {
+        "@appnest/readme": "^1.2.7"
+    }
+}
