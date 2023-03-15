@@ -14,4 +14,4 @@ zzzz.py
 node_modules
 blueprint.md 
 package-lock.json
-__pycahce__
+__pycache__
